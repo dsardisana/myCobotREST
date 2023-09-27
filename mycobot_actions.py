@@ -45,6 +45,11 @@ def reset(mc):
     return jsonify({"status": "Success", "message": "Executed 'Reset' command"}), 200
 
 def custom_angles(mc, angles):
+    # Check if any angle is greater than 160 or smaller than -160
+    if any(angle > 160 or angle < -160 for angle in angles):
+        print("Invalid angles received. Angles must be between -160 and 160.")
+        return jsonify({"status": "Error", "message": "Invalid angle values. Angles must be between -160 and 160."}), 400
+
     print("Moving to custom angles...")
     print(angles)
     mc.send_angles(angles, 50)
